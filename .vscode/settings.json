@@ -1,3 +1,9 @@
 {
-  "cSpell.words": ["Authlogin", "Shoppinglayout", "unauth"]
+  "cSpell.words": [
+    "Authlogin",
+    "checkauth",
+    "cloudinary",
+    "Shoppinglayout",
+    "unauth"
+  ]
 }
