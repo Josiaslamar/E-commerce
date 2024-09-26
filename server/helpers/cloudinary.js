@@ -14,4 +14,4 @@ async function imageUploadUtils(file) {
 }
 
 const upload = multer({ storage });
-module.export = { upload, imageUploadUtils }
+module.exports = { upload, imageUploadUtils }

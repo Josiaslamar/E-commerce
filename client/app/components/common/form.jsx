@@ -4,7 +4,7 @@ import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 
-function CommonForm({ formControls, formData, setFormData, onSubmit, buttonText }) {
+function CommonForm({ formControls, formData, setFormData, onSubmit, buttonText, isBtnDisabled }) {
     function renderInputsByComponentType(getControlItem) {
         let element = null;
         const value = formData[getControlItem.name] || ''
@@ -95,6 +95,7 @@ function CommonForm({ formControls, formData, setFormData, onSubmit, buttonText 
             <Button
                 type="submit"
                 className="mt-5 w-full"
+                disabled={isBtnDisabled}
             >
                 {buttonText || 'Sign Up'}
             </Button>
