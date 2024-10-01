@@ -6,5 +6,6 @@
     "Goma",
     "Shoppinglayout",
     "unauth"
-  ]
+  ],
+  "liveServer.settings.port": 5501
 }

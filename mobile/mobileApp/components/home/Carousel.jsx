@@ -1,107 +1,55 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, View, Dimensions, Image, TouchableOpacity } from 'react-native';
-import Carousel from 'react-native-reanimated-carousel';
-import { COLORS, SIZES } from '../../constants';
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import Carousel from 'react-native-snap-carousel'
 
-const { width } = Dimensions.get('window');
+const {width: screenWidth} = Dimensions.get("window")
+const dummyData = [
+    { id: 1, title: "Title 1" },
+    { id: 2, title: "Title 2" },
+    { id: 3, title: "Title 3" },
+    { id: 4, title: "Title 4" },
+    { id: 5, title: "Title 5" },
+]
 
-const MainCarouselComponent = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const carouselRef = useRef(null); 
-    const slides = [
-        require('../../assets/images/fn1.jpg'),
-        require('../../assets/images/fn2.jpg'),
-        require('../../assets/images/fn3.jpg'),
-        require('../../assets/images/fn4.jpg'),
-        require('../../assets/images/fn5.jpg'),
-    ];
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const nextIndex = (activeIndex + 1) % slides.length;
-            setActiveIndex(nextIndex);
-            if (carouselRef.current) {
-                carouselRef.current.scrollTo({ index: nextIndex, animated: true });
-            }
-        }, 3000); 
-
-        return () => clearInterval(interval); 
-    }, [activeIndex, slides.length]);
-
-    const Pagination = () => {
-        return (
-            <View style={styles.paginationContainer}>
-                {slides.map((_, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        onPress={() => {
-                            setActiveIndex(index); 
-                            if (carouselRef.current) {
-                                carouselRef.current.scrollTo({ index, animated: true });
-                            }
-                        }}
-                    >
-                        <View
-                            style={[
-                                styles.dot,
-                                index === activeIndex ? styles.activeDot : styles.inactiveDot,
-                            ]}
-                        />
-                    </TouchableOpacity>
-                ))}
-            </View>
-        );
-    };
-
+const MyCarousel = ({ data }) => {
+    const renderItem = ({ item }) => (
+        <View style={styles.card}>
+            <Text style={styles.title}>{item.title}</Text>
+        </View>
+    )
+    return (
+        <Carousel
+            data={data}
+            renderItem={renderItem}
+            sliderWidth={screenWidth}
+            itemWidth = {screenWidth}
+            layout={'default'}
+        />
+    )
+}
+export default function ImageCarousel() {
     return (
         <View style={styles.container}>
-            <Carousel
-                ref={carouselRef} 
-                loop={true}
-                width={width * 0.95}
-                height={200}
-                data={slides}
-                scrollAnimationDuration={1000}
-                onSnapToItem={(index) => setActiveIndex(index)} 
-                renderItem={({ index }) => (
-                    <Image
-                        source={slides[index]}
-                        style={styles.image}
-                    />
-                )}
-            />
-            <Pagination />
+            <Text style={styles.container}>Carousel</Text>
+            <MyCarousel data={dummyData}/>
         </View>
-    );
-};
-
+    )
+}
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        marginTop: 15,
+flex: 1,
+justifyContent: "center",
+alignItems: "center",
+marginTop: 20
     },
-    image: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 15,
+    text: {
+        fontSize: 20,
+        marginBottom: 20,
+        color: "blue",
     },
-    paginationContainer: {
-        flexDirection: 'row',
-        marginTop: 10,
-    },
-    dot: {
-        height: 10,
-        width: 10,
-        borderRadius: 5,
-        marginHorizontal: 5,
-    },
-    activeDot: {
-        backgroundColor: COLORS.primary,
-    },
-    inactiveDot: {
-        backgroundColor: COLORS.secondary,
-    },
-});
-
-export default MainCarouselComponent;
+    card: {
+        backgroundColor: "#c4c4c4",
+        borderRadius: 10,
+        padding: 20
+    }
+})
